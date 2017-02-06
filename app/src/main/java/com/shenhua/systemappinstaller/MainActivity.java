@@ -1,5 +1,6 @@
 package com.shenhua.systemappinstaller;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,9 +13,13 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.tbruyelle.rxpermissions.RxPermissions;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import rx.functions.Action1;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,7 +42,17 @@ public class MainActivity extends AppCompatActivity {
         adapter = new ItemAdapter(this, packageInfos);
         listView.setAdapter(adapter);
 
-        copyFiles();
+        new RxPermissions(this).request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .subscribe(new Action1<Boolean>() {
+                    @Override
+                    public void call(Boolean aBoolean) {
+                        if (aBoolean) {
+                            copyFiles();
+                        } else {
+                            Toast.makeText(MainActivity.this, "权限被用户拒绝，该功能无法使用", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
     private void copyFiles() {
