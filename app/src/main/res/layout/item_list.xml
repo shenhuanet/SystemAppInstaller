@@ -21,13 +21,13 @@
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="欢乐互动" />
+            android:text="APP" />
 
         <TextView
             android:id="@+id/tv_package"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="AmuseController" />
+            android:text="com.shenhua.app" />
 
     </LinearLayout>
 
